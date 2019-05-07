@@ -1,0 +1,6 @@
+{
+    "name": "channel-gw",
+    "id": 20001,
+    "port": 20001,
+    "watchConfigs": ["bindphone-reward"]
+}
