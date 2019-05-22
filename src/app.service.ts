@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
-
+import { Event, Config, ClusterService } from "@quickts/nestjs-cluster";
 @Injectable()
 export class AppService {
-    getHello(): string {
-        return "Hello World!";
-    }
+    constructor(private readonly clusterService: ClusterService) {}
 }

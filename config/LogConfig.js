@@ -1,13 +1,14 @@
 var path = require("path");
-var basePath = path.resolve(__dirname, "../logs");
+var basePath = path.resolve(__dirname, "../../logs");
 var appLogPath = path.resolve(basePath, "app");
 module.exports = {
     appenders: {
         logToErrorFile: {
             type: "dateFile",
-            filename: path.join(appLogPath, "error/"),
+            filename: path.join(appLogPath, "error"),
             alwaysIncludePattern: true,
-            pattern: "yyyy-MM-dd.log"
+            pattern: "yyyy-MM-dd.log",
+            daysToKeep: 14
         },
         errorLogger: {
             type: "logLevelFilter",
@@ -16,21 +17,22 @@ module.exports = {
         },
         appLogger: {
             type: "dateFile",
-            filename: path.join(appLogPath, "all/"),
+            filename: path.join(appLogPath, "all"),
+            alwaysIncludePattern: true,
             pattern: "yyyy-MM-dd.log",
-            alwaysIncludePattern: true
+            daysToKeep: 14
         },
-        consoleLooger: {
+        consoleLogger: {
             type: "console",
             layout: {
                 type: "colored"
             }
-        }
+        },
     },
     categories: {
         default: {
-            appenders: ["consoleLooger", "appLogger", "errorLogger"],
+            appenders: ["consoleLogger", "appLogger", "errorLogger"],
             level: "all"
-        }
+        },
     }
 }

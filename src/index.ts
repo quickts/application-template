@@ -1,41 +1,21 @@
+import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
-import { LoggerService } from "@nestjs/common";
+import { ClusterService } from "@quickts/nestjs-cluster";
+import { Log4jsService } from "@quickts/nestjs-log4js";
 import { AppModule } from "./app.module";
-import { Logger, getLogger, configure, shutdown } from "log4js";
 
-configure(require("./../config")("LogConfig"));
-
-class AppLogger implements LoggerService {
-    loggers = new Map<string, Logger>();
-    log(message: any, context?: string) {
-        getLogger(`[${context}]`).info(message);
-    }
-    error(message: any, trace?: string, context?: string) {
-        getLogger(`[${context}]`).error(message, trace);
-    }
-    warn(message: any, context?: string) {
-        getLogger(`[${context}]`).warn(message);
-    }
-    debug(message: any, context?: string) {
-        getLogger(`[${context}]`).debug(message);
-    }
-}
-
-async function bootstrap() {
+(async function() {
+    const configLoad = require("./../config");
+    const logger = new Log4jsService(configLoad("LogConfig"));
     try {
-        const uncaughtExceptionlogger = getLogger("[UncaughtException]");
-        process.on("uncaughtException", function(err) {
-            uncaughtExceptionlogger.error(err);
-        });
-
-        const app = await NestFactory.create(AppModule, {
-            logger: new AppLogger()
-        });
-        await app.listen(3000);
+        const app = await NestFactory.create(AppModule, { logger: logger });
+        app.useGlobalPipes(new ValidationPipe());
+        const cluster = app.get(ClusterService);
+        cluster.initialize(Reflect.get(app, "container"));
+        await app.listen(configLoad("AppConfig").port, "0.0.0.0");
+        await cluster.connectToRegistry();
     } catch (err) {
-        const bootstrapExceptionlogger = getLogger("[BootstrapException]");
-        bootstrapExceptionlogger.error(err);
-        shutdown();
+        logger.error(err);
+        logger.flushall(process.exit);
     }
-}
-bootstrap();
+})();
