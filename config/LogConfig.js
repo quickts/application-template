@@ -1,11 +1,10 @@
 var path = require("path");
-var basePath = path.resolve(__dirname, "../../logs");
-var appLogPath = path.resolve(basePath, "app");
+var basePath = path.resolve(__dirname, "../logs");
 module.exports = {
     appenders: {
         logToErrorFile: {
             type: "dateFile",
-            filename: path.join(appLogPath, "error"),
+            filename: path.join(basePath, "error"),
             alwaysIncludePattern: true,
             pattern: "yyyy-MM-dd.log",
             daysToKeep: 14
@@ -17,7 +16,7 @@ module.exports = {
         },
         appLogger: {
             type: "dateFile",
-            filename: path.join(appLogPath, "all"),
+            filename: path.join(basePath, "all"),
             alwaysIncludePattern: true,
             pattern: "yyyy-MM-dd.log",
             daysToKeep: 14
