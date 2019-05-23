@@ -28,7 +28,7 @@
     "@nestjs/core": "^6.2.4",
     "@nestjs/platform-express": "^6.2.4",
     "@quickts/nestjs-auth": "^1.0.0",
-    "@quickts/nestjs-cluster": "^1.0.1",
+    "@quickts/nestjs-cluster": "^1.0.2",
     "@quickts/nestjs-log4js": "^1.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
