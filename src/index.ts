@@ -10,6 +10,7 @@ import { AppModule } from "./app.module";
     try {
         const app = await NestFactory.create(AppModule, { logger: logger });
         app.useLogger(logger);
+        app.setGlobalPrefix("api");
         app.useGlobalPipes(new ValidationPipe());
         const cluster = app.get(ClusterService);
         cluster.initialize(Reflect.get(app, "container"));
