@@ -19,7 +19,7 @@
     "@types/node": "^12.0.2",
     "mocha": "^6.1.4",
     "rimraf": "^2.6.3",
-    "ts-node": "^8.1.0",
+    "ts-node": "^8.2.0",
     "typescript": "^3.4.5",
     "tsconfig-paths": "^3.8.0"
   },
@@ -28,7 +28,7 @@
     "@nestjs/core": "^6.2.4",
     "@nestjs/platform-express": "^6.2.4",
     "@quickts/nestjs-auth": "^1.0.0",
-    "@quickts/nestjs-cluster": "^1.0.3",
+    "@quickts/nestjs-cluster": "^1.0.4",
     "@quickts/nestjs-log4js": "^1.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
