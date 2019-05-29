@@ -7,6 +7,10 @@ import { AppModule } from "./app.module";
 (async function() {
     const configLoad = require("./../config");
     const logger = new Log4jsService(configLoad("LogConfig"));
+    process.on("uncaughtException", function(err) {
+        logger.error("uncaughtException:");
+        logger.error(err);
+    });
     try {
         const app = await NestFactory.create(AppModule, { logger: logger });
         app.useLogger(logger);
