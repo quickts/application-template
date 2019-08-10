@@ -5,12 +5,10 @@
             "type": "node",
             "request": "launch",
             "args": [
-                "${workspaceRoot}/src/index.ts"
-            ],
-            "runtimeArgs": [
                 "--nolazy",
                 "-r", "tsconfig-paths/register",
-                "-r", "ts-node/register"
+                "-r", "ts-node/register",
+                "${workspaceRoot}/src/index.ts"
             ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}",
@@ -22,11 +20,11 @@
             "name": "File",
             "type": "node",
             "request": "launch",
-            "args": ["${relativeFile}"],
-            "runtimeArgs": [
+            "args": [
                 "--nolazy",
                 "-r", "tsconfig-paths/register",
-                "-r", "ts-node/register"
+                "-r", "ts-node/register",
+                "${relativeFile}"
             ],
             "sourceMaps": true,
             "cwd": "${workspaceRoot}",
@@ -35,19 +33,22 @@
             "internalConsoleOptions": "neverOpen"
         },
         {
-            "name": "Test file(mocha)",
+            "name": "Test file(Jest)",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
             "args": [
                 "-r", "tsconfig-paths/register",
                 "-r", "ts-node/register",
-                "${relativeFile}",
-                "--colors",
-                "-t 100000"
+                "${workspaceRoot}/node_modules/jest/bin/jest",
+                "--runInBand",
+                "--rootDir=${fileDirname}",
+                "${fileBasename}"
             ],
+            "sourceMaps": true,
             "cwd": "${workspaceRoot}",
-            "protocol": "inspector"
+            "protocol": "inspector",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         }
     ]
 }

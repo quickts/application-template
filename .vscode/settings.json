@@ -1,7 +1,9 @@
 {
     "typescript.updateImportsOnFileMove.enabled": "always",
     "prettier.tabWidth": 4,
-    "prettier.printWidth": 145,
+    "prettier.printWidth": 150,
+    "prettier.endOfLine": "lf",
+    "prettier.singleQuote": true,
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
     "files.eol": "\n",

@@ -2,38 +2,62 @@
   "name": "@quickts/application-template",
   "version": "1.0.0",
   "description": "A quickts project",
-  "main": "dist/index.js",
-  "scripts": {
-    "clean": "rimraf dist",
-    "build": "rimraf dist && tsc -p tsconfig.json",
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
-    "start:dev": "ts-node -r tsconfig-paths/register src/index.ts",
-    "start:prod": "node dist/index.js",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register --recursive -R spec test/*.ts"
-  },
-  "keywords": [],
-  "author": "sbw",
+  "author": "quickts",
   "license": "MIT",
-  "devDependencies": {
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^12.0.3",
-    "mocha": "^6.1.4",
-    "rimraf": "^2.6.3",
-    "ts-node": "^8.2.0",
-    "typescript": "^3.5.1",
-    "tsconfig-paths": "^3.8.0"
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/index.js\"",
+    "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/index.js\"",
+    "start:prod": "node dist/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^6.2.4",
-    "@nestjs/core": "^6.2.4",
-    "@nestjs/platform-express": "^6.2.4",
-    "@quickts/nestjs-auth": "^1.0.0",
-    "@quickts/nestjs-cluster": "^1.0.5",
-    "@quickts/nestjs-log4js": "^1.0.0",
+    "@nestjs/common": "^6.0.0",
+    "@nestjs/core": "^6.0.0",
+    "@nestjs/platform-express": "^6.0.0",
+    "@quickts/nestjs-amqp": "^1.0.0",
+    "@quickts/nestjs-auth": "^1.0.1",
+    "@quickts/nestjs-log4js": "^1.0.1",
+    "@quickts/nestjs-nacos": "^1.0.1",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.5.2"
+    "internal-ip": "^4.3.0",
+    "reflect-metadata": "^0.1.12",
+    "rxjs": "^6.3.3"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "6.1.1",
+    "@types/express": "4.16.1",
+    "@types/jest": "24.0.11",
+    "@types/node": "11.13.4",
+    "@types/supertest": "2.0.7",
+    "jest": "24.7.1",
+    "supertest": "4.0.2",
+    "ts-jest": "24.0.2",
+    "ts-node": "8.1.0",
+    "tsc-watch": "2.2.1",
+    "tsconfig-paths": "3.8.0",
+    "typescript": "3.4.3",
+    "rimraf": "^2.6.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   },
   "files": [
     "dist"

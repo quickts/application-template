@@ -1,27 +1,21 @@
-import { ValidationPipe } from "@nestjs/common";
-import { NestFactory } from "@nestjs/core";
-import { ClusterService } from "@quickts/nestjs-cluster";
-import { Log4jsService } from "@quickts/nestjs-log4js";
-import { AppModule } from "./app.module";
+import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { Log4jsService } from '@quickts/nestjs-log4js';
+import { AppModule } from './app.module';
 
-(async function() {
-    const configLoad = require("./../config");
-    const logger = new Log4jsService(configLoad("LogConfig"));
-    process.on("uncaughtException", function(err) {
-        logger.error("uncaughtException:");
+async function bootstrap() {
+    const logger = new Log4jsService(process.env.LOG_LEVEL);
+    process.on('uncaughtException', function(err) {
+        logger.error('uncaughtException:');
         logger.error(err);
     });
     try {
-        const app = await NestFactory.create(AppModule, { logger: logger });
-        app.useLogger(logger);
-        app.setGlobalPrefix("api");
+        const app = await NestFactory.create(AppModule);
         app.useGlobalPipes(new ValidationPipe());
-        const cluster = app.get(ClusterService);
-        cluster.initialize(Reflect.get(app, "container"));
-        await app.listen(configLoad("AppConfig").port, "0.0.0.0");
-        await cluster.connectToRegistry();
+        await app.listen(process.env.SERVICE_PORT);
     } catch (err) {
         logger.error(err);
         logger.flushall(process.exit);
     }
-})();
+}
+bootstrap();
