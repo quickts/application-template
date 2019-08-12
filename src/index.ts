@@ -10,7 +10,7 @@ async function bootstrap() {
         logger.error(err);
     });
     try {
-        const app = await NestFactory.create(AppModule);
+        const app = await NestFactory.create(AppModule, { logger });
         app.useGlobalPipes(new ValidationPipe());
         await app.listen(process.env.SERVICE_PORT);
     } catch (err) {
