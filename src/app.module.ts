@@ -1,25 +1,25 @@
 import { Module } from '@nestjs/common';
-import { NacosNamingModule, NacosConfigModule } from '@quickts/nestjs-nacos';
 import { AuthModule } from '@quickts/nestjs-auth';
-import { v4 } from 'internal-ip';
+import { AmqpGlobalModule } from '@quickts/nestjs-amqp';
+import { NacosNamingGlobalModule, NacosConfigGlobalModule } from '@quickts/nestjs-nacos';
 
 @Module({
     imports: [
-        NacosNamingModule.forRoot({
-            clientOptions: {
-                serverList: process.env.NACOS_LIST,
-                namespace: process.env.SERVIC_NAMESPACE
-            },
-            instanceOptions: {
-                serviceName: process.env.SERVICE_NAME,
-                ip: process.env.SERVICE_HOST || v4.sync(),
-                port: Number(process.env.SERVICE_PORT)
-            }
+        NacosNamingGlobalModule.forRoot({
+            serverList: process.env.NACOS_LIST,
+            namespace: process.env.NACOS_NAMESPACE
         }),
-        NacosConfigModule.forRoot({
-            nameServerAddr: process.env.NACOS_LIST.split(',')[0]
+        NacosConfigGlobalModule.forRoot({
+            nameServerAddr: process.env.NACOS_LIST.split(',')[0],
+            namespace: process.env.NACOS_NAMESPACE
         }),
-        AuthModule.forRoot(process.env.JWT_SECRET) //
+        AmqpGlobalModule.forRoot({
+            hostname: process.env.RABBITMQ_HOST,
+            port: Number(process.env.RABBITMQ_PORT),
+            username: process.env.RABBITMQ_USERNAME,
+            password: process.env.RABBITMQ_PASSWORD
+        }),
+        AuthModule.forRoot(process.env.JWT_SECRET)
     ]
 })
 export class AppModule {}

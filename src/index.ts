@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { Log4jsService } from '@quickts/nestjs-log4js';
@@ -12,7 +13,7 @@ async function bootstrap() {
     try {
         const app = await NestFactory.create(AppModule, { logger });
         app.useGlobalPipes(new ValidationPipe());
-        await app.listen(process.env.SERVICE_PORT);
+        await app.listen(process.env.SERVICE_PORT, '0.0.0.0');
     } catch (err) {
         logger.error(err);
         logger.flushall(process.exit);
