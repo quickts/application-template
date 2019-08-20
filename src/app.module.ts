@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthModule } from '@quickts/nestjs-auth';
 import { AmqpGlobalModule } from '@quickts/nestjs-amqp';
 import { NacosNamingGlobalModule, NacosConfigGlobalModule } from '@quickts/nestjs-nacos';
+import { HelloModule } from 'hello/hello.module';
 
 @Module({
     imports: [
@@ -10,7 +11,7 @@ import { NacosNamingGlobalModule, NacosConfigGlobalModule } from '@quickts/nestj
             namespace: process.env.NACOS_NAMESPACE
         }),
         NacosConfigGlobalModule.forRoot({
-            nameServerAddr: process.env.NACOS_LIST.split(',')[0],
+            serverAddr: process.env.NACOS_LIST.split(',')[0],
             namespace: process.env.NACOS_NAMESPACE
         }),
         AmqpGlobalModule.forRoot({
@@ -19,7 +20,8 @@ import { NacosNamingGlobalModule, NacosConfigGlobalModule } from '@quickts/nestj
             username: process.env.RABBITMQ_USERNAME,
             password: process.env.RABBITMQ_PASSWORD
         }),
-        AuthModule.forRoot(process.env.JWT_SECRET)
+        AuthModule.forRoot(process.env.JWT_SECRET),
+        HelloModule
     ]
 })
 export class AppModule {}
