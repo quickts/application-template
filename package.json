@@ -29,7 +29,7 @@
     "class-validator": "^0.10.0",
     "dotenv": "^8.1.0",
     "internal-ip": "^4.3.0",
-    "log4js": "^5.0.0",
+    "log4js": "^6.4.0",
     "nacos": "^2.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2"
