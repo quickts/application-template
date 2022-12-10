@@ -19,7 +19,7 @@
   "dependencies": {
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
-    "@nestjs/platform-express": "^6.5.3",
+    "@nestjs/platform-express": "^9.2.1",
     "@quickts/nestjs-amqp": "^1.0.3",
     "@quickts/nestjs-auth": "^1.0.3",
     "@quickts/nestjs-log4js": "^1.0.4",
