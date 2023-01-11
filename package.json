@@ -26,7 +26,7 @@
     "@quickts/nestjs-nacos": "^1.0.3",
     "amqplib": "^0.5.5",
     "class-transformer": "^0.2.3",
-    "class-validator": "^0.10.0",
+    "class-validator": "^0.14.0",
     "dotenv": "^8.1.0",
     "internal-ip": "^4.3.0",
     "log4js": "^5.0.0",
